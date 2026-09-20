@@ -1,0 +1,153 @@
+{% extends 'hospital/doctor_base.html' %} {% load static %} {% block content %}
+
+<style>
+  .dashboard-container {
+    padding: 15px 30px 20px 30px !important;
+    margin-top: 0 !important;
+  }
+
+  /* Table Card Styling */
+  .custom-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    margin-top: 10px;
+  }
+
+  .custom-card-header {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .custom-card-header h6 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  /* Modern Table Styling */
+  .custom-table {
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .custom-table thead th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e2e8f0;
+    padding: 12px 16px;
+  }
+
+  .custom-table tbody tr:hover {
+    background-color: #f1f5f9;
+  }
+
+  .custom-table tbody td {
+    padding: 12px 16px;
+    vertical-align: middle;
+    color: #334155;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .patient-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0f2fe;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 35px 20px;
+    color: #94a3b8;
+  }
+</style>
+
+<div class="container-fluid dashboard-container">
+  <!-- Top Metric Cards -->
+  {% include 'hospital/doctor_dashboard_cards.html' %}
+
+  <!-- Recent Appointments Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="custom-card">
+        <div class="custom-card-header">
+          <h6>
+            <i class="fa fa-calendar-check-o mr-2"></i>Recent Appointments For
+            You
+          </h6>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table custom-table" id="dev-table">
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Picture</th>
+                <th>Description</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for a,p in appointments %}
+              <tr>
+                <td class="font-weight-bold" style="color: #0f172a">
+                  {{a.patientName}}
+                </td>
+                <td>
+                  <img
+                    src="{% static p.profile_pic.url %}"
+                    alt="Profile Pic"
+                    class="patient-img"
+                    onerror="
+                      this.onerror = null;
+                      this.src =
+                        'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+                    "
+                  />
+                </td>
+                <td>{{a.description}}</td>
+                <td>
+                  <span
+                    class="badge badge-light p-2"
+                    style="font-weight: 600; color: #475569"
+                    >{{p.mobile}}</span
+                  >
+                </td>
+                <td>{{p.address}}</td>
+                <td>
+                  <i class="fa fa-clock-o text-muted mr-1"></i
+                  >{{a.appointmentDate}}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <i class="fa fa-folder-open-o fa-2x mb-2 d-block"></i>
+                  No recent appointments found.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

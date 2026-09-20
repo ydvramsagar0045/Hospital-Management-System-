@@ -1,0 +1,313 @@
+{% extends 'hospital/doctor_base.html' %}
+{% load static %}
+
+{% block content %}
+<meta charset="UTF-8">
+
+
+<style>
+  .bill-container {
+    padding: 15px 30px 30px 30px !important;
+    margin-top: 0 !important;
+  }
+
+  .invoice-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  /* Header Bar */
+  .invoice-header {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #ffffff;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hospital-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .stay-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* Body Content */
+  .invoice-body {
+    padding: 28px 30px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background: #f8fafc;
+    padding: 18px 22px;
+    border-radius: 10px;
+    border: 1px solid #f1f5f9;
+    margin-bottom: 20px;
+  }
+
+  .info-item h6 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #0284c7;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .info-item p {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 3px;
+  }
+
+  .info-item span {
+    font-size: 0.88rem;
+    color: #64748b;
+    display: block;
+  }
+
+  /* Symptoms Box */
+  .symptoms-card {
+    background: #eff6ff;
+    border-left: 4px solid #0284c7;
+    padding: 12px 18px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 22px;
+  }
+
+  .symptoms-card h6 {
+    font-size: 0.78rem;
+    color: #0369a1;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .symptoms-card p {
+    font-size: 0.92rem;
+    color: #334155;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  /* Table Billing */
+  .table-bill {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  .table-bill th {
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .table-bill td {
+    padding: 12px 16px;
+    font-size: 0.92rem;
+    color: #334155;
+    font-weight: 600;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .text-right {
+    text-align: right !important;
+  }
+
+  /* Total Grand Box */
+  .total-box {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #ffffff;
+    padding: 16px 22px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .total-label {
+    font-size: 0.98rem;
+    font-weight: 600;
+  }
+
+  .total-amount {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #38bdf8;
+  }
+
+  /* NEW PROMINENT ACTION FOOTER & DOWNLOAD BUTTON */
+  .action-footer {
+    padding: 20px 30px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-download-pdf {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #ffffff !important;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    transition: all 0.25s ease-in-out;
+    text-decoration: none !important;
+  }
+
+  .btn-download-pdf:hover {
+    background: linear-gradient(135deg, #0369a1, #075985);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+  }
+
+  /* Print specific style */
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    .invoice-card, .invoice-card * {
+      visibility: visible;
+    }
+    .invoice-card {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      box-shadow: none;
+      border: none;
+    }
+    .action-footer {
+      display: none !important;
+    }
+  }
+</style>
+
+<div class="bill-container">
+  <div class="invoice-card">
+    
+    <!-- Top Header Bar -->
+    <div class="invoice-header">
+      <div class="hospital-title">
+        <i class="fa fa-hospital-o"></i> Hospital Management
+      </div>
+      <div class="stay-badge">
+        Discharge Bill & Receipt
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="invoice-body">
+      
+      <!-- Patient & Stay Info -->
+      <div class="info-grid">
+        <div class="info-item">
+          <h6><i class="fa fa-user-circle mr-1"></i> Patient Details</h6>
+          <p>{{patientName}}</p>
+          <span><i class="fa fa-phone"></i> {{mobile}}</span>
+          <span><i class="fa fa-map-marker"></i> {{address}}</span>
+        </div>
+
+        <div class="info-item">
+          <h6><i class="fa fa-calendar-check-o mr-1"></i> Doctor & Stay Info</h6>
+          <p>Dr. {{assignedDoctorName}}</p>
+          <span><strong>Admit Date:</strong> {{admitDate}}</span>
+          <span><strong>Release Date:</strong> {{releaseDate}}</span>
+          <span><strong>Total Stay:</strong> {{daySpent}} Days</span>
+        </div>
+      </div>
+
+      <!-- Disease & Symptoms -->
+      <div class="symptoms-card">
+        <h6><i class="fa fa-stethoscope"></i> Disease & Symptoms</h6>
+        <p>{{symptoms}}</p>
+      </div>
+
+      <!-- Charges Table -->
+      <table class="table-bill">
+        <thead>
+          <tr>
+            <th>Item Particulars</th>
+            <th class="text-right">Price (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Room Charge of {{daySpent}} Days</td>
+            <td class="text-right">₹ {{roomCharge}}</td>
+          </tr>
+          <tr>
+            <td>Doctor Consultation Fee</td>
+            <td class="text-right">₹ {{doctorFee}}</td>
+          </tr>
+          <tr>
+            <td>Medicine & Pharmacy Cost</td>
+            <td class="text-right">₹ {{medicineCost}}</td>
+          </tr>
+          <tr>
+            <td>Other Charges</td>
+            <td class="text-right">₹ {{OtherCharge}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Grand Total -->
+      <div class="total-box">
+        <div class="total-label">
+          <i class="fa fa-calculator mr-2"></i> Total Amount
+        </div>
+        <div class="total-amount">
+          ₹ {{total}}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NEW DESIGN ACTION FOOTER WITH DOWNLOAD BUTTON -->
+    <div class="action-footer">
+      <span style="font-size:0.85rem; color:#64748b; font-weight:600;">
+        <i class="fa fa-check-circle text-success"></i> Computer Generated Official Invoice
+      </span>
+      
+      <!-- Modern Ocean Blue Download Button -->
+      <button class="btn-download-pdf" onclick="window.print()">
+        <i class="fa fa-download"></i> Download / Print Bill
+      </button>
+    </div>
+
+  </div>
+</div>
+{% endblock content %}

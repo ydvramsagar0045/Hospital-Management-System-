@@ -1,0 +1,166 @@
+{% extends 'hospital/doctor_base.html' %} {% load static %} {% block content %}
+<style>
+  .delete-appointment-container {
+    padding: 15px 30px 20px 30px !important;
+    margin-top: 0 !important;
+  }
+
+  .card-table {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+  }
+
+  .card-header-danger-custom {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #ffffff;
+    padding: 16px 24px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .table-custom {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .table-custom th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .table-custom td {
+    padding: 14px 20px;
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.92rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+  }
+
+  .table-custom tbody tr:hover {
+    background: #fef2f2;
+  }
+
+  .patient-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+  }
+
+  .btn-delete-custom {
+    background-color: #fee2e2;
+    color: #ef4444;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none !important;
+  }
+
+  .btn-delete-custom:hover {
+    background-color: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+  }
+
+  .no-data-box {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+</style>
+
+<div class="delete-appointment-container">
+  <div class="card-table">
+    <div class="card-header-danger-custom">
+      <span
+        ><i class="fa fa-trash-o mr-2"></i> Delete / Cancel Appointments</span
+      >
+      <span class="badge badge-light text-danger font-weight-bold p-2"
+        >Total: {{appointments|length}}</span
+      >
+    </div>
+
+    {% if appointments %}
+    <div class="table-responsive">
+      <table class="table table-custom">
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Picture</th>
+            <th>Description</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a, p in appointments %}
+          <tr>
+            <td><strong>{{a.patientName}}</strong></td>
+            <td>
+              {% if p.profile_pic %}
+              <img
+                src="{% static p.profile_pic.url %}"
+                alt="Profile Pic"
+                class="patient-img"
+              />
+              {% else %}
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                alt="Profile Pic"
+                class="patient-img"
+              />
+              {% endif %}
+            </td>
+            <td>{{a.description}}</td>
+            <td class="text-center">
+              <a
+                class="btn-delete-custom"
+                href="{% url 'delete-appointment' a.id %}"
+                onclick="
+                  return confirm(
+                    'Are you sure you want to delete this appointment?',
+                  );
+                "
+              >
+                <i class="fa fa-trash"></i> Delete
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="no-data-box">
+      <i class="fa fa-check-circle-o fa-3x mb-3 d-block text-success"></i>
+      <h5>No Appointments To Delete</h5>
+      <p class="text-muted mb-0">
+        There are no appointments available right now.
+      </p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

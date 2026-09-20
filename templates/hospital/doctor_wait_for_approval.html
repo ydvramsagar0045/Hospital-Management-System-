@@ -1,0 +1,132 @@
+{% extends 'hospital/homebase.html' %} {% block content %}
+
+<style>
+  .pending-wrapper {
+    min-height: 75vh;
+    background-color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 15px;
+  }
+
+  .pending-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    max-width: 580px;
+    width: 100%;
+    padding: 40px;
+    text-align: center;
+  }
+
+  /* Clock Icon Badge */
+  .pending-icon-header {
+    width: 64px;
+    height: 64px;
+    background: #fff7ed;
+    color: #f97316;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px auto;
+    font-size: 28px;
+    border: 1px solid #ffedd5;
+  }
+
+  .pending-title {
+    color: #0f172a;
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .pending-subtitle {
+    color: #e11d48;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .pending-divider {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 20px 0;
+  }
+
+  .pending-info-box {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px dashed #cbd5e1;
+    margin-bottom: 25px;
+  }
+
+  .pending-info-box p {
+    color: #475569;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+
+  .pending-info-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  .btn-logout-custom {
+    background-color: #0284c7;
+    color: #ffffff !important;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 6px;
+    border: none;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-logout-custom:hover {
+    background-color: #0369a1;
+  }
+</style>
+
+<div class="pending-wrapper">
+  <div class="pending-card">
+    <!-- Pending Clock Icon Header -->
+    <div class="pending-icon-header">
+      <i class="fa fa-clock-o"></i>
+    </div>
+
+    <!-- Hello User -->
+    <h1 class="pending-title">Hello {{request.user.first_name}}</h1>
+    <p class="pending-subtitle">Your Account is not approved till now</p>
+
+    <hr class="pending-divider" />
+
+    <!-- Message Box -->
+    <div class="pending-info-box">
+      <p>
+        <i class="fa fa-info-circle text-info mr-1"></i> Our Team is checking
+        your profile
+      </p>
+      <p>
+        <i class="fa fa-check-circle text-success mr-1"></i> Soon your Account
+        will be confirmed !!!
+      </p>
+    </div>
+
+    <p class="text-muted small mb-3">Check Later</p>
+
+    <!-- Logout Action Button -->
+    <div>
+      <a class="btn-logout-custom" href="/logout" role="button">
+        <i class="fa fa-sign-out"></i> Logout For Now
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

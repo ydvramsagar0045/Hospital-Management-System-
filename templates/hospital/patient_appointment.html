@@ -1,0 +1,125 @@
+{% extends 'hospital/patient_base.html' %} {% load static %} {% block content %}
+<style>
+  .option-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .option-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(2, 132, 199, 0.15);
+    border-color: #93c5fd;
+  }
+
+  .icon-wrapper {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .icon-book {
+    background: #e0f2fe;
+    color: #0284c7;
+  }
+  .icon-view {
+    background: #dcfce7;
+    color: #16a34a;
+  }
+
+  .option-card h4 {
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+  }
+
+  .option-card p {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .btn-custom-card {
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+  }
+
+  .btn-blue {
+    background: #0284c7;
+    color: #ffffff !important;
+  }
+  .btn-blue:hover {
+    background: #0369a1;
+  }
+
+  .btn-green {
+    background: #16a34a;
+    color: #ffffff !important;
+  }
+  .btn-green:hover {
+    background: #15803d;
+  }
+</style>
+
+<div class="container-fluid px-2">
+  <div class="row justify-content-center pt-3">
+    <!-- Book Appointment Option -->
+    <div class="col-md-5 mb-4">
+      <div class="option-card">
+        <div class="icon-wrapper icon-book">
+          <i class="fa fa-calendar-plus-o"></i>
+        </div>
+        <h4>Book Appointment</h4>
+        <p>
+          Schedule a new consultation with your preferred hospital doctor
+          easily.
+        </p>
+        <a
+          href="/patient-book-appointment"
+          class="btn btn-custom-card btn-blue"
+        >
+          <i class="fa fa-plus-circle mr-1"></i> Book Now
+        </a>
+      </div>
+    </div>
+
+    <!-- View Appointment Option -->
+    <div class="col-md-5 mb-4">
+      <div class="option-card">
+        <div class="icon-wrapper icon-view">
+          <i class="fa fa-list-alt"></i>
+        </div>
+        <h4>Your Appointments</h4>
+        <p>
+          Check the status, history, and details of your booked appointments.
+        </p>
+        <a
+          href="/patient-view-appointment"
+          class="btn btn-custom-card btn-green"
+        >
+          <i class="fa fa-eye mr-1"></i> View Status
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

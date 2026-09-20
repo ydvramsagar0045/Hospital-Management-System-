@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Account Pending | Hospital Management</title>
+
+    <style>
+      body {
+        background-color: #f8fafc;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .approval-container {
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+      }
+
+      .approval-card {
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 10px 25px rgba(2, 132, 199, 0.08);
+        max-width: 580px;
+        width: 100%;
+        padding: 40px 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .status-icon-wrapper {
+        width: 90px;
+        height: 90px;
+        background: #e0f2fe;
+        color: #0284c7;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        margin-bottom: 24px;
+        box-shadow: 0 0 0 8px rgba(2, 132, 199, 0.1);
+      }
+
+      .approval-card h1 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 12px;
+      }
+
+      .status-badge {
+        display: inline-block;
+        background: #fef3c7;
+        color: #d97706;
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 20px;
+        letter-spacing: 0.5px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+      }
+
+      .approval-card p.description {
+        color: #64748b;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 28px;
+      }
+
+      .divider {
+        height: 1px;
+        background: #e2e8f0;
+        margin: 25px 0;
+      }
+
+      .logout-btn-custom {
+        background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+        color: #ffffff !important;
+        font-weight: 600;
+        padding: 12px 32px;
+        border-radius: 10px;
+        text-decoration: none !important;
+        display: inline-flex;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+        transition: all 0.25s ease;
+      }
+
+      .logout-btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+        background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+      }
+
+      .footer-note {
+        color: #94a3b8;
+        font-size: 0.88rem;
+        margin-top: 15px;
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    {% include "hospital/navbar.html" %}
+
+    <div class="approval-container">
+      <div class="approval-card">
+        <div class="status-icon-wrapper">
+          <i class="fa fa-clock-o"></i>
+        </div>
+
+        <span class="status-badge"
+          ><i class="fa fa-hourglass-half mr-1"></i> Approval Pending</span
+        >
+
+        <h1>Hello, {{request.user.first_name}}!</h1>
+
+        <p class="description">
+          Your account registration request has been received.<br />
+          Our medical team is reviewing your profile, and your account will be
+          confirmed shortly!
+        </p>
+
+        <div class="divider"></div>
+
+        <div>
+          <a class="logout-btn-custom" href="/logout" role="button">
+            <i class="fa fa-sign-out mr-2"></i> Logout For Now
+          </a>
+        </div>
+
+        <p class="footer-note">
+          Please check back later to access your dashboard.
+        </p>
+      </div>
+    </div>
+
+    {% include "hospital/footer.html" %}
+  </body>
+</html>

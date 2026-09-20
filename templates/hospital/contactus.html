@@ -1,0 +1,130 @@
+{% extends 'hospital/homebase.html' %} {% load static %} {% block content %}
+
+<style>
+  .contact-container {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: #f8fafc;
+  }
+
+  .contact-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    padding: 45px 40px;
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .contact-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .contact-badge {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0284c7;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+  }
+
+  .contact-header h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .contact-header p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-top: 8px;
+  }
+
+  /* Django Form Fields Custom Styling */
+  .contact-card p {
+    margin-bottom: 20px;
+  }
+
+  .contact-card label {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 0.9rem;
+  }
+
+  .contact-card input[type="text"],
+  .contact-card input[type="email"],
+  .contact-card textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: #1e293b;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    outline: none;
+  }
+
+  .contact-card input[type="text"]:focus,
+  .contact-card input[type="email"]:focus,
+  .contact-card textarea:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+  }
+
+  .btn-submit {
+    width: 100%;
+    background: #0284c7;
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 13px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.25);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .btn-submit:hover {
+    background: #0369a1;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(2, 132, 199, 0.35);
+  }
+</style>
+
+<div class="contact-container">
+  <div class="contact-card">
+    <div class="contact-header">
+      <span class="contact-badge"
+        ><i class="fa fa-envelope mr-1"></i> Contact Us</span
+      >
+      <h2>Send Us Your Feedback</h2>
+      <p>We'd love to hear from you. Fill out the form below!</p>
+    </div>
+
+    <form method="POST">
+      {% csrf_token %} {{ form.as_p }}
+
+      <button type="submit" class="btn-submit">
+        <i class="fa fa-paper-plane mr-2"></i>Send Message
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

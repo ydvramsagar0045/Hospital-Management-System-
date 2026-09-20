@@ -1,0 +1,110 @@
+<style>
+  .market-update-block {
+    padding: 35px 28px;
+    border-radius: 16px;
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 140px; /* Minimum height set kar di hai */
+  }
+
+  .market-update-block:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  }
+
+  /* Vibrant Colors */
+  .clr-block-1 {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  }
+
+  .clr-block-2 {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  }
+
+  .clr-block-3 {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  }
+
+  .market-update-left h3 {
+    color: #ffffff;
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .market-update-left h4 {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 12px 0 0 0;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .market-update-right i {
+    font-size: 2.6rem;
+    width: 75px;
+    height: 75px;
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 75px;
+    backdrop-filter: blur(4px);
+  }
+
+  .market-update-right i.fa-calendar {
+    color: #ffffff;
+  }
+  .market-update-right i.fa-user-o {
+    color: #ffffff;
+  }
+  .market-update-right i.fa-check-circle-o {
+    color: #ffffff;
+  }
+</style>
+
+<div class="row">
+  <!-- Card 1: Red -->
+  <div class="col-md-4 col-sm-6">
+    <div class="market-update-block clr-block-1">
+      <div class="market-update-left">
+        <h3>{{appointmentcount}}</h3>
+        <h4>Appointments For You</h4>
+      </div>
+      <div class="market-update-right">
+        <i class="fa fa-calendar"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2: Orange -->
+  <div class="col-md-4 col-sm-6">
+    <div class="market-update-block clr-block-2">
+      <div class="market-update-left">
+        <h3>{{patientcount}}</h3>
+        <h4>Patient Under You</h4>
+      </div>
+      <div class="market-update-right">
+        <i class="fa fa-user-o"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3: Blue -->
+  <div class="col-md-4 col-sm-6">
+    <div class="market-update-block clr-block-3">
+      <div class="market-update-left">
+        <h3>{{patientdischarged}}</h3>
+        <h4>Your Patient Discharged</h4>
+      </div>
+      <div class="market-update-right">
+        <i class="fa fa-check-circle-o"></i>
+      </div>
+    </div>
+  </div>
+</div>

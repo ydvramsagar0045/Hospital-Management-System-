@@ -1,0 +1,135 @@
+{% extends 'hospital/admin_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<style>
+  .admin-page-wrapper {
+    padding: 40px 15px;
+    background-color: #f8fafc;
+    min-height: 80vh;
+  }
+
+  .custom-form-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  .custom-card-header {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    padding: 18px 20px;
+    text-align: center;
+  }
+
+  .panel-title-custom {
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  .form-body-custom {
+    padding: 30px 25px;
+  }
+
+  .form-group-custom {
+    margin-bottom: 20px;
+  }
+
+  .form-group-custom label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+  }
+
+  /* Form Control Modern Styling */
+  .form-body-custom .form-control {
+    width: 100%;
+    height: 44px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    color: #334155;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    box-shadow: none;
+  }
+
+  .form-body-custom textarea.form-control {
+    height: auto;
+    min-height: 90px;
+  }
+
+  .form-body-custom .form-control:focus {
+    border-color: #0284c7;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+  }
+
+  /* Modern Submit Button */
+  .btn-submit-custom {
+    width: 100%;
+    height: 44px;
+    background-color: #0284c7;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+  }
+
+  .btn-submit-custom:hover {
+    background-color: #0369a1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+  }
+</style>
+
+<div class="admin-page-wrapper">
+  <div class="custom-form-card">
+    
+    <!-- HEADER -->
+    <div class="custom-card-header">
+      <h6 class="panel-title-custom">Book Appointment Details</h6>
+    </div>
+
+    <!-- FORM BODY -->
+    <div class="form-body-custom">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group-custom">
+          <label>Description / Reason</label>
+          {% render_field appointmentForm.description class="form-control" placeholder="Enter description or reason for appointment" %}
+        </div>
+
+        <div class="form-group-custom">
+          <label>Select Doctor</label>
+          {% render_field appointmentForm.doctorId class="form-control" %}
+        </div>
+
+        <div class="form-group-custom">
+          <label>Select Patient</label>
+          {% render_field appointmentForm.patientId class="form-control" %}
+        </div>
+
+        <button type="submit" class="btn-submit-custom">Book Appointment</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}

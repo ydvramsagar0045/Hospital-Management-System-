@@ -1,0 +1,136 @@
+{% extends 'hospital/homebase.html' %} {% block content %}
+
+<style>
+  .doctor-landing-wrapper {
+    min-height: 75vh;
+    background-color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 15px;
+  }
+
+  .doctor-landing-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+  }
+
+  /* Doctor Distinct Icon Badge */
+  .doctor-icon-header {
+    width: 64px;
+    height: 64px;
+    background: #e0f2fe;
+    color: #0284c7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px auto;
+    font-size: 28px;
+  }
+
+  .doctor-title {
+    color: #0f172a;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .doctor-subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+
+  .doctor-divider {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 20px 0;
+  }
+
+  .doctor-info-text {
+    color: #475569;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+  }
+
+  .btn-group-custom {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-custom-outline {
+    background: #ffffff;
+    color: #0284c7 !important;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 6px;
+    border: 2px solid #0284c7;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-custom-outline:hover {
+    background-color: #f0f9ff;
+  }
+
+  .btn-custom-primary {
+    background-color: #0284c7;
+    color: #ffffff !important;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 6px;
+    border: 2px solid #0284c7;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-custom-primary:hover {
+    background-color: #0369a1;
+    border-color: #0369a1;
+  }
+</style>
+
+<div class="doctor-landing-wrapper">
+  <div class="doctor-landing-card">
+    <!-- Doctor Identity Icon Header -->
+    <div class="doctor-icon-header">
+      <i class="fa fa-user-md"></i>
+    </div>
+
+    <h1 class="doctor-title">Hello, Doctor</h1>
+    <p class="doctor-subtitle">Welcome to Hospital Management System.</p>
+
+    <hr class="doctor-divider" />
+
+    <p class="doctor-info-text">
+      You can access various features after Login/SignUp.
+    </p>
+
+    <div class="btn-group-custom">
+      <a class="btn-custom-outline" href="/doctorsignup" role="button">
+        <i class="fa fa-wpforms"></i> Apply
+      </a>
+      <a class="btn-custom-primary" href="/doctorlogin" role="button">
+        <i class="fa fa-sign-in"></i> Login
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

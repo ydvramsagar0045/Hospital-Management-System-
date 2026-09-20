@@ -1,0 +1,198 @@
+{% load static %}
+
+<style>
+  /* DASHBOARD HEADER */
+  .patient-welcome-card {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    border-radius: 16px;
+    padding: 24px 28px;
+    color: #ffffff;
+    margin-bottom: 35px;
+    box-shadow: 0 10px 20px rgba(2, 132, 199, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .patient-welcome-card h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .patient-welcome-card p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 0.95rem;
+  }
+
+  .welcome-icon {
+    font-size: 3rem;
+    opacity: 0.25;
+  }
+
+  /* STATS CARDS CONTAINER SPACING */
+  .card-grid-wrapper {
+    margin-bottom: 30px; /* Vertical gap between rows */
+  }
+
+  /* STATS CARDS */
+  .stat-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HOVER EFFECT FIX WITH Z-INDEX AND MARGIN GAP */
+  .stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(2, 132, 199, 0.18);
+    border-color: #93c5fd;
+    z-index: 10; /* Ensures hover card sits above adjacent elements */
+  }
+
+  .card-info {
+    flex-grow: 1;
+    padding-right: 15px;
+  }
+
+  .card-info .label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #64748b;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .card-info .value {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  .card-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  /* COLOR THEMES FOR CARDS */
+  .theme-blue .card-icon { background: #e0f2fe; color: #0284c7; }
+  .theme-rose .card-icon { background: #ffe4e6; color: #e11d48; }
+  .theme-emerald .card-icon { background: #dcfce7; color: #16a34a; }
+  .theme-amber .card-icon { background: #fef3c7; color: #d97706; }
+  .theme-purple .card-icon { background: #f3e8ff; color: #9333ea; }
+  .theme-indigo .card-icon { background: #e0e7ff; color: #4f46e5; }
+</style>
+
+<!-- WELCOME BANNER -->
+<div class="patient-welcome-card">
+  <div>
+    <h3>Hello, {{request.user.first_name}}! 👋</h3>
+    <p>Welcome to your Patient Portal. Here are your treatment and doctor details.</p>
+  </div>
+  <div class="welcome-icon d-none d-md-block">
+    <i class="fa fa-user-md"></i>
+  </div>
+</div>
+
+<!-- CARDS GRID -->
+<div class="row">
+
+  <!-- Doctor Name -->
+  <div class="col-lg-4 col-md-6 card-grid-wrapper">
+    <div class="stat-card theme-blue">
+      <div class="card-info">
+        <span class="label">Doctor Name</span>
+        <div class="value">{{doctorName}}</div>
+      </div>
+      <div class="card-icon">
+        <i class="fa fa-user-md"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Symptoms -->
+  <div class="col-lg-4 col-md-6 card-grid-wrapper">
+    <div class="stat-card theme-rose">
+      <div class="card-info">
+        <span class="label">Symptoms</span>
+        <div class="value">{{symptoms}}</div>
+      </div>
+      <div class="card-icon">
+        <i class="fa fa-stethoscope"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Doctor Mobile -->
+  <div class="col-lg-4 col-md-6 card-grid-wrapper">
+    <div class="stat-card theme-emerald">
+      <div class="card-info">
+        <span class="label">Doctor Contact</span>
+        <div class="value">{{doctorMobile}}</div>
+      </div>
+      <div class="card-icon">
+        <i class="fa fa-phone"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Doctor Address -->
+  <div class="col-lg-4 col-md-6 card-grid-wrapper">
+    <div class="stat-card theme-amber">
+      <div class="card-info">
+        <span class="label">Doctor Address</span>
+        <div class="value">{{doctorAddress}}</div>
+      </div>
+      <div class="card-icon">
+        <i class="fa fa-map-marker"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Doctor Department -->
+  <div class="col-lg-4 col-md-6 card-grid-wrapper">
+    <div class="stat-card theme-purple">
+      <div class="card-info">
+        <span class="label">Department</span>
+        <div class="value">{{doctorDepartment}}</div>
+      </div>
+      <div class="card-icon">
+        <i class="fa fa-hospital-o"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admit Date -->
+  <div class="col-lg-4 col-md-6 card-grid-wrapper">
+    <div class="stat-card theme-indigo">
+      <div class="card-info">
+        <span class="label">Admit Date</span>
+        <div class="value">{{admitDate}}</div>
+      </div>
+      <div class="card-icon">
+        <i class="fa fa-calendar-check-o"></i>
+      </div>
+    </div>
+  </div>
+
+</div>

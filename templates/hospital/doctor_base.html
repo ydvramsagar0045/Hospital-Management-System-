@@ -1,0 +1,419 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hospital Management</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <style>
+      body {
+        padding-left: 260px;
+        background-color: #f8fafc;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #334155;
+        margin: 0;
+      }
+
+      main {
+        position: relative;
+        min-height: 100vh;
+      }
+
+      /* TOP NAVBAR */
+      .navbar {
+        background: #ffffff !important;
+        border-bottom: 1px solid #e2e8f0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        padding: 12px 28px;
+        margin-left: 260px;
+        z-index: 100;
+        width: calc(100% - 260px);
+      }
+
+      .navbar-brand {
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        font-size: 1.15rem;
+        color: #0284c7 !important;
+        text-decoration: none;
+      }
+
+      .home-btn {
+        background: #e0f2fe;
+        border: 1px solid #bae6fd;
+        border-radius: 8px;
+        padding: 6px 16px !important;
+        color: #0284c7 !important;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        margin-right: 10px;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .home-btn:hover {
+        background: #0284c7;
+        color: #ffffff !important;
+      }
+
+      .logout-btn {
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 6px 16px !important;
+        color: #475569 !important;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .logout-btn:hover {
+        background: #ef4444;
+        border-color: #ef4444;
+        color: #ffffff !important;
+      }
+
+      /* LIGHT SIDEBAR MENU */
+      .menu {
+        background: #ffffff;
+        height: 100vh;
+        width: 260px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 105;
+        border-right: 1px solid #e2e8f0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .menu .avatar {
+        padding: 28px 20px 20px 20px;
+        text-align: center;
+        border-bottom: 1px solid #f1f5f9;
+        background: #fafafa;
+      }
+
+      .img-wrapper {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+
+      .menu .avatar img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #0284c7;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+        padding: 2px;
+        background: #ffffff;
+      }
+
+      .online-indicator {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 14px;
+        height: 14px;
+        background-color: #22c55e;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+      }
+
+      .role-badge {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #0284c7;
+        background: #e0f2fe;
+        padding: 3px 10px;
+        border-radius: 12px;
+        display: inline-block;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+      }
+
+      .menu .avatar h2 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0;
+        text-transform: capitalize;
+      }
+
+      .menu ul {
+        list-style: none;
+        padding: 20px 12px;
+        margin: 0;
+        flex-grow: 1;
+      }
+
+      .menu ul li {
+        margin-bottom: 6px;
+      }
+
+      .menu ul li a {
+        display: flex;
+        align-items: center;
+        padding: 12px 18px;
+        color: #64748b;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .menu ul li a i {
+        font-size: 1.15rem;
+        margin-right: 14px;
+        width: 22px;
+        text-align: center;
+        color: #64748b;
+        transition: color 0.2s ease;
+      }
+
+      .menu ul li a:hover {
+        background: #f1f5f9;
+        color: #0284c7;
+      }
+
+      .menu ul li a:hover i {
+        color: #0284c7;
+      }
+
+      .menu ul li.active a {
+        background: #e0f2fe;
+        color: #0284c7 !important;
+        font-weight: 700;
+      }
+
+      .menu ul li.active a i {
+        color: #0284c7 !important;
+      }
+
+      /* EXACT FIT PAGE CONTENT CONTAINER */
+      .page-content-wrapper {
+        padding-top: 90px !important; 
+        padding-bottom: 30px !important;
+        margin-top: 0 !important;
+        min-height: calc(100vh - 120px);
+      }
+      @media (max-width: 991px) {
+        body {
+          padding-left: 0;
+        }
+        .navbar {
+          margin-left: 0;
+          width: 100%;
+        }
+        .menu {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+        .menu.show {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- SIDEBAR NAVIGATION -->
+    <nav class="menu">
+      <header class="avatar">
+        <div class="img-wrapper">
+          <img
+            src="{% static 'images/doctorpropic.png' %}"
+            alt="Doctor Profile"
+            onerror="
+              this.onerror = null;
+              this.src =
+                'https://cdn-icons-png.flaticon.com/512/3774/3774299.png';
+            "
+          />
+          <span class="online-indicator" title="Active Now"></span>
+        </div>
+        <div>
+          <span class="role-badge">DOCTOR</span>
+          <h2>{{request.user.first_name}}</h2>
+        </div>
+      </header>
+
+      <ul>
+        <li class="active">
+          <a href="/doctor-dashboard">
+            <i class="fa fa-tachometer"></i><span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/doctor-patient">
+            <i class="fa fa-wheelchair"></i><span>Patients</span>
+          </a>
+        </li>
+        <li>
+          <a href="/doctor-appointment">
+            <i class="fa fa-calendar"></i><span>Appointments</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main>
+      <!-- TOP NAVBAR -->
+      <div class="bs-example">
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+          <a href="{% url 'home' %}" class="navbar-brand">
+            <i class="fa fa-hospital-o mr-2"></i>HOSPITAL MANAGEMENT
+          </a>
+          <button
+            type="button"
+            class="navbar-toggler"
+            data-toggle="collapse"
+            data-target="#navbarCollapse"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end"
+            id="navbarCollapse"
+          >
+            <div class="navbar-nav align-items-center">
+              <a href="{% url 'home' %}" class="nav-item nav-link home-btn">
+                <i class="fa fa-home mr-1"></i> Home
+              </a>
+              <form
+                method="post"
+                action="{% url 'logout' %}"
+                style="display: inline"
+              >
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">
+                  <i class="fa fa-sign-out mr-1"></i> Logout
+                </button>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- PAGE CONTENT -->
+      <div class="page-content-wrapper">
+        {% block content %} {% endblock content %}
+      </div>
+
+      <!-- FOOTER -->
+      <style>
+        footer.admin-footer {
+          background: #ffffff;
+          border-top: 1px solid #e2e8f0;
+          color: #64748b;
+          padding: 20px 0 16px 0;
+          text-align: center;
+          margin-top: 30px;
+        }
+
+        .admin-footer .social-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          color: #64748b !important;
+          margin: 0 5px 8px 5px;
+          font-size: 1rem;
+          transition: all 0.25s ease;
+          background: #f1f5f9;
+          text-decoration: none !important;
+        }
+
+        .admin-footer .social-btn:hover {
+          transform: translateY(-3px);
+          color: #ffffff !important;
+        }
+
+        .admin-footer .btn-wa:hover {
+          background: #25d366 !important;
+        }
+        .admin-footer .btn-li:hover {
+          background: #0a66c2 !important;
+        }
+        .admin-footer .btn-insta:hover {
+          background: #e1306c !important;
+        }
+        .admin-footer .btn-tw:hover {
+          background: #1da1f2 !important;
+        }
+      </style>
+
+      <footer class="admin-footer">
+        <div class="container">
+          <div>
+            <a
+              href="https://wa.me/916395386215"
+              target="_blank"
+              class="social-btn btn-wa"
+              title="WhatsApp"
+            >
+              <i class="fa fa-whatsapp"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ramsagar-yadav-1210a8304"
+              target="_blank"
+              class="social-btn btn-li"
+              title="LinkedIn"
+            >
+              <i class="fa fa-linkedin"></i>
+            </a>
+            <a
+              href="https://instagram.com/ydvramsagar45"
+              target="_blank"
+              class="social-btn btn-insta"
+              title="Instagram"
+            >
+              <i class="fa fa-instagram"></i>
+            </a>
+            <a
+              href="https://x.com/Ramsagarydv45"
+              target="_blank"
+              class="social-btn btn-tw"
+              title="Twitter"
+            >
+              <i class="fa fa-twitter"></i>
+            </a>
+          </div>
+
+          <p
+            style="
+              margin: 0;
+              font-size: 0.85rem;
+              color: #94a3b8;
+              font-weight: 500;
+            "
+          >
+            Developed with ❤️ By
+            <span style="color: #0284c7; font-weight: 700">Ramsagar Yadav</span>
+          </p>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

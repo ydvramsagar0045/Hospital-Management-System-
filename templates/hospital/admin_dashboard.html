@@ -1,0 +1,207 @@
+{% extends 'hospital/admin_base.html' %} {% load static %} {% block content %}
+
+<style>
+  .dashboard-section {
+    padding: 20px 0 40px 0;
+  }
+
+  .custom-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    margin-bottom: 30px;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .custom-card:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header-custom {
+    background: linear-gradient(135deg, #007bff, #00d2ff);
+    color: #ffffff;
+    padding: 16px 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-header-custom h6 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .table-responsive-custom {
+    padding: 10px 15px;
+  }
+
+  .custom-table {
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+
+  .custom-table thead th {
+    border: none;
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 15px;
+    border-bottom: 2px solid #e9ecef;
+  }
+
+  .custom-table tbody tr {
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+  }
+
+  .custom-table tbody tr:hover {
+    background-color: #eef5ff;
+    transform: scale(1.01);
+  }
+
+  .custom-table tbody td {
+    padding: 14px 15px;
+    vertical-align: middle;
+    color: #2c3e50;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: none;
+  }
+
+  /* Stylish Status Badges */
+  .badge-custom {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .badge-permanent,
+  .badge-admitted {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+  }
+
+  .badge-hold {
+    background-color: #fff8e1;
+    color: #f57f17;
+    border: 1px solid #ffe082;
+  }
+</style>
+
+{% include 'hospital/admin_dashboard_cards.html' %}
+
+<div class="container-fluid dashboard-section">
+  <div class="row">
+    <!-- RECENT DOCTORS TABLE -->
+    <div class="col-md-6 col-lg-6 mb-4">
+      <div class="custom-card">
+        <div class="card-header-custom">
+          <h6><i class="fa fa-user-md mr-2"></i> Recent Doctors</h6>
+        </div>
+        <div class="table-responsive-custom">
+          <table class="table custom-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Mobile</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for d in doctors %}
+              <tr>
+                <td><strong>{{d.get_name}}</strong></td>
+                <td>{{d.department}}</td>
+                <td>{{d.mobile}}</td>
+                <td>
+                  {% if d.status %}
+                  <span class="badge-custom badge-permanent">Permanent</span>
+                  {% else %}
+                  <span class="badge-custom badge-hold">On Hold</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="4" class="text-center text-muted">
+                  No Doctors Found
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECENT PATIENTS TABLE -->
+    <div class="col-md-6 col-lg-6 mb-4">
+      <div class="custom-card">
+        <div
+          class="card-header-custom"
+          style="background: linear-gradient(135deg, #17a2b8, #00d2ff)"
+        >
+          <h6><i class="fa fa-wheelchair mr-2"></i> Recent Patients</h6>
+        </div>
+        <div class="table-responsive-custom">
+          <table class="table custom-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Symptoms</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in patients %}
+              <tr>
+                <td><strong>{{p.get_name}}</strong></td>
+                <td>{{p.symptoms}}</td>
+                <td>{{p.mobile}}</td>
+                <td>{{p.address}}</td>
+                <td>
+                  {% if p.status %}
+                  <span class="badge-custom badge-admitted">Admitted</span>
+                  {% else %}
+                  <span class="badge-custom badge-hold">On Hold</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center text-muted">
+                  No Patients Found
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+{% include "hospital/footer.html" %}

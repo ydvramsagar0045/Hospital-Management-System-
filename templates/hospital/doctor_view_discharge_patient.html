@@ -1,0 +1,151 @@
+{% extends 'hospital/doctor_base.html' %} {% load static %} {% block content %}
+<style>
+  .discharged-container {
+    padding: 15px 30px 20px 30px !important;
+    margin-top: 0 !important;
+  }
+
+  .card-table {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+  }
+
+  .card-header-success-custom {
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    color: #ffffff;
+    padding: 16px 24px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .table-custom {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .table-custom th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .table-custom td {
+    padding: 14px 20px;
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.92rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+  }
+
+  .table-custom tbody tr:hover {
+    background: #f0fdf4;
+  }
+
+  .badge-date-admit {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .badge-date-release {
+    background-color: #dcfce7;
+    color: #15803d;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .symptoms-tag {
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    display: inline-block;
+  }
+
+  .no-data-box {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+</style>
+
+<div class="discharged-container">
+  <div class="card-table">
+    <div class="card-header-success-custom">
+      <span
+        ><i class="fa fa-user-check mr-2"></i> Your Discharged Patient
+        List</span
+      >
+      <span class="badge badge-light text-dark font-weight-bold p-2"
+        >Total: {{dischargedpatients|length}}</span
+      >
+    </div>
+
+    {% if dischargedpatients %}
+    <div class="table-responsive">
+      <table class="table table-custom">
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Admit Date</th>
+            <th>Release Date</th>
+            <th>Symptoms</th>
+            <th>Mobile</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in dischargedpatients %}
+          <tr>
+            <td><strong>{{p.patientName}}</strong></td>
+            <td>
+              <span class="badge-date-admit"
+                ><i class="fa fa-calendar-plus-o mr-1"></i>
+                {{p.admitDate}}</span
+              >
+            </td>
+            <td>
+              <span class="badge-date-release"
+                ><i class="fa fa-calendar-check-o mr-1"></i>
+                {{p.releaseDate}}</span
+              >
+            </td>
+            <td><span class="symptoms-tag">{{p.symptoms}}</span></td>
+            <td><i class="fa fa-phone text-muted mr-1"></i> {{p.mobile}}</td>
+            <td>{{p.address}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="no-data-box">
+      <i class="fa fa-user-times fa-3x mb-3 d-block text-muted"></i>
+      <h5>No Discharged Patients</h5>
+      <p class="text-muted mb-0">
+        No patient history found for discharged status.
+      </p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

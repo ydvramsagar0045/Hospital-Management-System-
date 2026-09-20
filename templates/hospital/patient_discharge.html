@@ -1,0 +1,149 @@
+{% extends 'hospital/patient_base.html' %} {% load static %} {% block content %}
+<style>
+  .discharge-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    padding: 28px;
+    max-width: 800px;
+    margin: 10px auto 40px auto;
+  }
+
+  .discharge-header {
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+  }
+
+  .discharge-header h3 {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  .bill-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.95rem;
+  }
+
+  .bill-item span {
+    color: #64748b;
+    font-weight: 600;
+  }
+  .bill-item strong {
+    color: #0f172a;
+    font-weight: 700;
+  }
+
+  .total-bill-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .total-bill-box h4 {
+    margin: 0;
+    color: #166534;
+    font-weight: 800;
+  }
+
+  .btn-download-bill {
+    background: #0284c7;
+    color: #ffffff !important;
+    font-weight: 700;
+    padding: 10px 22px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    display: inline-block;
+    transition: all 0.2s ease;
+  }
+
+  .btn-download-bill:hover {
+    background: #0369a1;
+  }
+</style>
+
+<div class="container-fluid px-2">
+  <div class="discharge-card">
+    <div class="discharge-header">
+      <h3>
+        <i class="fa fa-file-text-o mr-2 text-primary"></i>Discharge Summary &
+        Invoice
+      </h3>
+    </div>
+
+    {% if patientDetails %}
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="bill-item">
+          <span>Patient Name:</span> <strong>{{patientName}}</strong>
+        </div>
+        <div class="bill-item">
+          <span>Doctor Name:</span> <strong>Dr. {{assignedDoctorName}}</strong>
+        </div>
+        <div class="bill-item">
+          <span>Admit Date:</span> <strong>{{admitDate}}</strong>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="bill-item">
+          <span>Release Date:</span> <strong>{{releaseDate}}</strong>
+        </div>
+        <div class="bill-item">
+          <span>Days Stayed:</span> <strong>{{day}} Days</strong>
+        </div>
+        <div class="bill-item">
+          <span>Symptoms:</span> <strong>{{symptoms}}</strong>
+        </div>
+      </div>
+    </div>
+
+    <hr style="border-top: 1px dashed #cbd5e1" />
+
+    <div class="bill-item">
+      <span>Room Charge (Rs {{roomCharge}} x {{day}} Days):</span>
+      <strong>Rs. {{roomChargeTotal}}</strong>
+    </div>
+    <div class="bill-item">
+      <span>Doctor Fee:</span> <strong>Rs. {{doctorFee}}</strong>
+    </div>
+    <div class="bill-item">
+      <span>Medicine Cost:</span> <strong>Rs. {{medicineCost}}</strong>
+    </div>
+    <div class="bill-item">
+      <span>Other / Service Charge:</span> <strong>Rs. {{OtherCharge}}</strong>
+    </div>
+
+    <div class="total-bill-box">
+      <div>
+        <small class="text-uppercase font-weight-bold text-success"
+          >Total Amount Payable</small
+        >
+        <h4>Rs. {{total}}</h4>
+      </div>
+      <a href="/download-pdf/{{patientId}}" class="btn-download-bill">
+        <i class="fa fa-download mr-1"></i> Download Invoice
+      </a>
+    </div>
+
+    {% else %}
+    <div class="text-center py-4 text-muted">
+      <i class="fa fa-info-circle fa-2x mb-2 text-primary"></i>
+      <p class="mb-0">
+        You have not been discharged yet or no invoice is available.
+      </p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

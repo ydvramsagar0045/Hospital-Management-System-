@@ -1,0 +1,123 @@
+{% extends 'hospital/admin_base.html' %} {% load static %} {% block content %}
+
+<style>
+  .admin-page-wrapper {
+    padding: 30px 15px;
+    background-color: #f8fafc;
+    min-height: 80vh;
+  }
+
+  .custom-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .custom-card-header {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .panel-title-custom {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  .table-responsive-custom {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  .modern-table th {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 14px 16px;
+    border-bottom: 2px solid #e2e8f0;
+    text-align: left;
+  }
+
+  .modern-table td {
+    padding: 14px 16px;
+    color: #475569;
+    font-size: 0.92rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+  }
+
+  .modern-table tbody tr:hover {
+    background-color: #f8fafc;
+  }
+
+  /* Department Badge */
+  .badge-department {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  .empty-msg {
+    text-align: center;
+    padding: 30px;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+</style>
+
+<div class="admin-page-wrapper">
+  <div class="custom-card">
+    <!-- HEADER -->
+    <div class="custom-card-header">
+      <h6 class="panel-title-custom">Department & Doctors</h6>
+    </div>
+
+    <!-- TABLE AREA -->
+    <div class="table-responsive-custom">
+      <table class="modern-table" id="dev-table">
+        <thead>
+          <tr>
+            <th>Department</th>
+            <th>Doctor Name</th>
+            <th>Mobile</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in doctors %}
+          <tr>
+            <td><span class="badge-department">{{ d.department }}</span></td>
+            <td><strong>Dr. {{ d.get_name }}</strong></td>
+            <td>{{ d.mobile }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="3" class="empty-msg">
+              No department & doctor records found.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

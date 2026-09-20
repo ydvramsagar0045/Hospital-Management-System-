@@ -1,0 +1,187 @@
+{% extends 'hospital/admin_base.html' %} {% load static %} {% block content %}
+
+<style>
+  .admin-page-wrapper {
+    padding: 30px 15px;
+    background-color: #f8fafc;
+    min-height: 80vh;
+  }
+
+  .custom-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .custom-card-header {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .panel-title-custom {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  .table-responsive-custom {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  .modern-table th {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 14px 16px;
+    border-bottom: 2px solid #e2e8f0;
+    text-align: left;
+  }
+
+  .modern-table td {
+    padding: 14px 16px;
+    color: #475569;
+    font-size: 0.92rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+  }
+
+  .modern-table tbody tr:hover {
+    background-color: #f8fafc;
+  }
+
+  .patient-img-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+  }
+
+  /* Buttons Style */
+  .btn-approve-custom {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background-color: #0284c7;
+    color: #ffffff !important;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+  }
+
+  .btn-approve-custom:hover {
+    background-color: #0369a1;
+    transform: translateY(-2px);
+  }
+
+  .btn-reject-custom {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background-color: #ef4444;
+    color: #ffffff !important;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+  }
+
+  .btn-reject-custom:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+  }
+
+  .empty-msg {
+    text-align: center;
+    padding: 30px;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+</style>
+
+<div class="admin-page-wrapper">
+  <div class="custom-card">
+    <!-- HEADER -->
+    <div class="custom-card-header">
+      <h6 class="panel-title-custom">Patient Wants To Admit</h6>
+    </div>
+
+    <!-- TABLE AREA -->
+    <div class="table-responsive-custom">
+      <table class="modern-table" id="dev-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Profile Picture</th>
+            <th>Symptoms</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th style="text-align: center">Approve</th>
+            <th style="text-align: center">Reject</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in patients %}
+          <tr>
+            <td><strong>{{ p.get_name }}</strong></td>
+            <td>
+              <img
+                src="{% static p.profile_pic.url %}"
+                alt="Profile Pic"
+                class="patient-img-avatar"
+              />
+            </td>
+            <td style="color: #64748b">{{ p.symptoms }}</td>
+            <td>{{ p.mobile }}</td>
+            <td>{{ p.address }}</td>
+            <td style="text-align: center">
+              <a
+                class="btn-approve-custom"
+                href="{% url 'approve-patient' p.id %}"
+                title="Approve"
+              >
+                <i class="fa fa-check"></i>
+              </a>
+            </td>
+            <td style="text-align: center">
+              <a
+                class="btn-reject-custom"
+                href="{% url 'reject-patient' p.id %}"
+                title="Reject"
+              >
+                <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="empty-msg">
+              No pending patient admission requests found.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

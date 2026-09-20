@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <style>
+      /* Top Space Added Here */
+      .cards-container {
+        padding-top: 35px; /* Top bar se distance */
+        padding-bottom: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .dashboard-stat-card {
+        position: relative;
+        border-radius: 16px;
+        padding: 24px;
+        color: #ffffff;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+      }
+
+      .dashboard-stat-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Gradient Themes */
+      .card-gradient-doctor {
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      }
+
+      .card-gradient-patient {
+        background: linear-gradient(135deg, #f7971e, #ffd200);
+      }
+
+      .card-gradient-appointment {
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+      }
+
+      .stat-content {
+        z-index: 2;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin: 0;
+        letter-spacing: -0.5px;
+      }
+
+      .stat-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin: 6px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        opacity: 0.95;
+      }
+
+      .stat-subtitle {
+        font-size: 0.85rem;
+        margin: 0;
+        opacity: 0.9;
+        font-weight: 500;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 10px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-top: 6px;
+        backdrop-filter: blur(5px);
+      }
+
+      /* Icon Box */
+      .stat-icon-box {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.22);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        z-index: 2;
+        transition: transform 0.3s ease;
+      }
+
+      .dashboard-stat-card:hover .stat-icon-box {
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      .stat-icon-box i {
+        font-size: 2.2rem;
+        color: #ffffff;
+      }
+
+      .dashboard-stat-card::after {
+        content: "";
+        position: absolute;
+        width: 140px;
+        height: 140px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        right: -30px;
+        bottom: -30px;
+        z-index: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cards-container">
+      <div class="row">
+        <!-- TOTAL DOCTOR CARD -->
+        <div class="col-md-4 col-sm-6">
+          <div class="dashboard-stat-card card-gradient-doctor">
+            <div class="stat-content">
+              <h3 class="stat-number">{{doctorcount}}</h3>
+              <div class="stat-title">Total Doctor</div>
+              <p class="stat-subtitle">
+                <i class="fa fa-clock-o mr-1"></i> Approval Required :
+                {{pendingdoctorcount}}
+              </p>
+            </div>
+            <div class="stat-icon-box">
+              <i class="fa fa-user-md"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOTAL PATIENT CARD -->
+        <div class="col-md-4 col-sm-6">
+          <div class="dashboard-stat-card card-gradient-patient">
+            <div class="stat-content">
+              <h3 class="stat-number">{{patientcount}}</h3>
+              <div class="stat-title">Total Patient</div>
+              <p class="stat-subtitle">
+                <i class="fa fa-bed mr-1"></i> Wants to Admit :
+                {{pendingpatientcount}}
+              </p>
+            </div>
+            <div class="stat-icon-box">
+              <i class="fa fa-user-o"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOTAL APPOINTMENT CARD -->
+        <div class="col-md-4 col-sm-6">
+          <div class="dashboard-stat-card card-gradient-appointment">
+            <div class="stat-content">
+              <h3 class="stat-number">{{appointmentcount}}</h3>
+              <div class="stat-title">Total Appointment</div>
+              <p class="stat-subtitle">
+                <i class="fa fa-check-circle-o mr-1"></i> Approve Appointments :
+                {{pendingappointmentcount}}
+              </p>
+            </div>
+            <div class="stat-icon-box">
+              <i class="fa fa-calendar"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

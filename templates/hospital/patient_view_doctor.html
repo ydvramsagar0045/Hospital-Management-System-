@@ -1,0 +1,180 @@
+{% extends 'hospital/patient_base.html' %} {% load static %} {% block content %}
+<style>
+  .doctor-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    padding: 24px;
+    margin-bottom: 30px;
+  }
+
+  .page-header-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .page-header-custom h3 {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  .search-box {
+    display: flex;
+    gap: 8px;
+  }
+
+  .search-input {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+
+  .search-input:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+  }
+
+  .search-btn {
+    background: #0284c7;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .search-btn:hover {
+    background: #0369a1;
+  }
+
+  .table-custom {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .table-custom th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 18px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .table-custom td {
+    padding: 14px 18px;
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+  }
+
+  .table-custom tbody tr:hover {
+    background: #f8fafc;
+  }
+
+  .doctor-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+  }
+
+  .dept-badge {
+    background: #e0f2fe;
+    color: #0284c7;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-block;
+  }
+
+  .no-doctor-box {
+    text-align: center;
+    padding: 40px 20px;
+    color: #ef4444;
+  }
+</style>
+
+<div class="container-fluid px-2">
+  <div class="doctor-card">
+    <!-- Top Header & Search Bar -->
+    <div class="page-header-custom">
+      <h3><i class="fa fa-user-md mr-2 text-primary"></i>Total Doctor List</h3>
+
+      <form action="/searchdoctor" method="get" class="search-box">
+        <input
+          class="search-input"
+          type="search"
+          placeholder="Search doctor..."
+          name="query"
+          id="query"
+          aria-label="Search"
+          required
+        />
+        <button class="search-btn" type="submit">
+          <i class="fa fa-search mr-1"></i> Search
+        </button>
+      </form>
+    </div>
+
+    <!-- Doctor Table -->
+    {% if doctors %}
+    <div class="table-responsive">
+      <table class="table table-custom">
+        <thead>
+          <tr>
+            <th>Profile</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Mobile</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in doctors %}
+          <tr>
+            <td>
+              <img
+                src="{% static d.profile_pic.url %}"
+                alt="Profile Pic"
+                class="doctor-avatar"
+              />
+            </td>
+            <td><strong>Dr. {{d.get_name}}</strong></td>
+            <td><span class="dept-badge">{{d.department}}</span></td>
+            <td>{{d.mobile}}</td>
+            <td>{{d.address}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="no-doctor-box">
+      <i class="fa fa-exclamation-circle fa-2x mb-2"></i>
+      <h4>No Doctor Found !!!</h4>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

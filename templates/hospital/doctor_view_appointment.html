@@ -1,0 +1,172 @@
+{% extends 'hospital/doctor_base.html' %} {% load static %} {% block content %}
+<style>
+  .appointment-container {
+    padding: 15px 30px 20px 30px !important;
+    margin-top: 0 !important;
+  }
+
+  .card-table {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+  }
+
+  .card-header-custom {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #ffffff;
+    padding: 16px 24px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .table-custom {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .table-custom th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .table-custom td {
+    padding: 14px 20px;
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.92rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+  }
+
+  .table-custom tbody tr:hover {
+    background: #f8fafc;
+  }
+
+  .patient-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+  }
+
+  .badge-approved {
+    background-color: #dcfce7;
+    color: #15803d;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .badge-pending {
+    background-color: #fef3c7;
+    color: #b45309;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .no-data-box {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+</style>
+
+<div class="appointment-container">
+  <div class="card-table">
+    <div class="card-header-custom">
+      <span
+        ><i class="fa fa-calendar-check-o mr-2"></i> Your Scheduled
+        Appointments</span
+      >
+      <span class="badge badge-light text-dark font-weight-bold p-2"
+        >Total: {{appointments|length}}</span
+      >
+    </div>
+
+    {% if appointments %}
+    <div class="table-responsive">
+      <table class="table table-custom">
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Profile</th>
+            <th>Description</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Appointment Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in appointments %}
+          <tr>
+            <td><strong>{{a.patientName}}</strong></td>
+            <td>
+              {% if a.patientId.profile_pic %}
+              <img
+                src="{% static a.patientId.profile_pic.url %}"
+                alt="Patient"
+                class="patient-img"
+              />
+              {% else %}
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                alt="Patient"
+                class="patient-img"
+              />
+              {% endif %}
+            </td>
+            <td>{{a.description}}</td>
+            <td><i class="fa fa-phone text-muted mr-1"></i> {{a.mobile}}</td>
+            <td>{{a.address}}</td>
+            <td>
+              <span class="badge badge-info p-2">{{a.appointmentDate}}</span>
+            </td>
+            <td>
+              {% if a.status %}
+              <span class="badge-approved"
+                ><i class="fa fa-check-circle mr-1"></i> Approved</span
+              >
+              {% else %}
+              <span class="badge-pending"
+                ><i class="fa fa-clock-o mr-1"></i> Pending</span
+              >
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="no-data-box">
+      <i class="fa fa-calendar-o fa-3x mb-3 d-block text-muted"></i>
+      <h5>No Appointments Found</h5>
+      <p class="text-muted mb-0">
+        Currently there are no appointments assigned to you.
+      </p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}
